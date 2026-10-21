@@ -136,6 +136,7 @@ const helpText = [
   'AVAILABLE COMMANDS',
   '',
   '  help       Show this help message',
+  '  neofetch   Displays simulated system profile',
   '  whoami     Professional profile',
   '  skills     Technical competencies',
   '  projects   Engineering projects',
@@ -147,6 +148,7 @@ const helpText = [
   '  pwd        Print working directory',
   '  cd         Change directory',
   '  cat        Read a text file',
+  '  history    Display command history',
   '  clear      Clear the terminal',
   '',
   'EXAMPLES',
@@ -236,6 +238,28 @@ export default function Terminal() {
     let output: string[] = []
 
     switch (cmd) {
+      case 'neofetch': {
+        output = [
+            '    ███████╗██████╗',
+            '    ██╔════╝██╔══██╗',
+            '    █████╗  ██████╔╝',
+            '    ██╔══╝  ██╔══██╗',
+            '    ███████╗██║  ██║',
+            '    ╚══════╝╚═╝  ╚═╝',
+            '',
+            'guest@portfolio',
+            '----------------------------',
+            'OS: Edilberto.OS 1.0 (Simulated)',
+            'Role: Infrastructure & Security Engineer',
+            'Shell: portfolio-shell',
+            'Focus: Blue Team / Networks / Automation',
+            'Projects: 5',
+            'Certifications: BTL1, Google Cybersecurity',
+            'Environment: Browser-based simulation',
+        ]
+        break
+        }
+        
       case 'help':
         output = helpText
         break
@@ -341,6 +365,14 @@ export default function Terminal() {
         ]
         break
         }  
+
+      case 'history': {
+         output = [...previousCommands, raw].map(
+         (previous, index) =>
+             `${String(index + 1).padStart(4, ' ')}  ${previous}`
+         )
+         break
+        }
 
       case 'pwd':
         output = ['/home/guest' + (cwd === '/' ? '' : cwd)]
