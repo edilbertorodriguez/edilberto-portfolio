@@ -81,6 +81,40 @@ export const projects: Project[] = [
     ],
   },
   {
+  id: 'terraform',
+  number: '03',
+  title: 'Automated VM Provisioning',
+  category: 'INFRASTRUCTURE AS CODE',
+  status: 'Validated Laboratory Implementation',
+  summary:
+    'Repeatable provisioning of Ubuntu Server virtual machines on Proxmox VE using Terraform, cloud-init templates, and infrastructure configuration.',
+  challenge:
+    'Reduce manual virtual machine deployment and establish consistent, reproducible infrastructure configurations.',
+  solution:
+    'Developed reusable Terraform configurations for provisioning Ubuntu virtual machines from a cloud-init template on Proxmox VE, including CPU, memory, storage, networking, and guest initialization.',
+  technologies: [
+    'Terraform',
+    'Proxmox VE',
+    'Ubuntu Server 24.04',
+    'Cloud-init',
+    'QEMU Guest Agent',
+    'Linux',
+    'SSH',
+  ],
+  highlights: [
+    'Created an Ubuntu 24.04 cloud-init virtual machine template.',
+    'Implemented a reusable Terraform module for VM provisioning.',
+    'Configured virtual CPU, RAM, storage, networking, and guest initialization.',
+    'Provisioned multiple Ubuntu virtual machines with different resource specifications.',
+    'Validated VM networking, SSH connectivity, cloud-init, and QEMU guest agent operation.',
+  ],
+  results: [
+    'Successfully provisioned Ubuntu virtual machines through Terraform.',
+    'Verified network connectivity and SSH access.',
+    'Validated cloud-init configuration and QEMU guest agent functionality.',
+  ],
+},
+  {
     id: 'terratech',
     number: '05',
     title: 'TerraTech — Satellite & IoT Telemetry',
