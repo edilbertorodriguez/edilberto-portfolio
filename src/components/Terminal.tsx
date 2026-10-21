@@ -139,6 +139,7 @@ const helpText = [
   '  whoami     Professional profile',
   '  skills     Technical competencies',
   '  projects   Engineering projects',
+  '  resume     View available resume versions',
   '  github     Open GitHub profile',
   '  certs      Certifications',
   '  ls         List directory contents',
@@ -157,7 +158,7 @@ const helpText = [
 
 const knownCommands = [
   'help', 'whoami', 'skills', 'projects',
-  'certs', 'ls', 'pwd', 'cd', 'cat', 'clear', 'github',
+  'certs', 'ls', 'pwd', 'cd', 'cat', 'clear', 'github', 'resume',
 ]
 
 function normalizePath(cwd: string, target: string): string {
@@ -292,6 +293,21 @@ export default function Terminal() {
         ]
         break
         }
+      
+      case 'resume': {
+          output = [
+            'EDILBERTO RODRIGUEZ — RESUME CENTER',
+            '',
+            'Available resume versions:',
+            '  Infrastructure & Systems Engineering',
+            '  Cybersecurity / Blue Team',
+            '  Satellite Communications & Space Systems',
+            '',
+            '[STATUS] Resume downloads coming soon.',
+            'Use "github" to explore current technical projects.',
+        ]
+        break
+        }  
 
       case 'pwd':
         output = ['/home/guest' + (cwd === '/' ? '' : cwd)]
