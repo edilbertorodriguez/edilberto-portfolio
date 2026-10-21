@@ -521,56 +521,57 @@ export default function Terminal() {
     }
 
     if (event.key === 'Tab' && !event.shiftKey) {
-         event.preventDefault()
+      const trimmed = input.trim()
+      if (!trimmed) return
 
-        const trimmed = input.trim()
-        if (!trimmed) return
+      const firstSpace = trimmed.indexOf(' ')
 
-        const firstSpace = trimmed.indexOf(' ')
+      // Autocomplete command names
+      if (firstSpace === -1) {
+        const matches = knownCommands.filter((cmd) =>
+          cmd.startsWith(trimmed.toLowerCase())
+        )
 
-          // Complete command names.
-        if (firstSpace === -1) {
-            const matches = knownCommands.filter((cmd) =>
-            cmd.startsWith(trimmed.toLowerCase())
-            )
-
-            if (matches.length === 1) {
-            setInput(matches[0] + ' ')
-            }
-
-            return
+        if (matches.length === 1) {
+          event.preventDefault()
+          setInput(matches[0] + ' ')
         }
 
-        const command = trimmed.slice(0, firstSpace).toLowerCase()
-        const argument = trimmed.slice(firstSpace + 1)
+        return
+      }
 
-        // Complete project shortcuts.
-        if (command === 'project') {
-            const projectNames = directories['/projects']
+      const command = trimmed.slice(0, firstSpace).toLowerCase()
+      const argument = trimmed.slice(firstSpace + 1)
 
-            const matches = projectNames.filter((name) =>
-            name.startsWith(argument)
-            )
+      // Autocomplete project shortcuts
+      if (command === 'project') {
+        const projectNames = directories['/projects']
 
-            if (matches.length === 1) {
-            setInput(`project ${matches[0]} `)
+        const matches = projectNames.filter((name) =>
+          name.startsWith(argument)
+        )
+
+        if (matches.length === 1) {
+          event.preventDefault()
+          setInput(`project ${matches[0]} `)
         }
 
-            return
-        }
+        return
+      }
 
-        // Complete simulated filesystem paths.
-        if (['cd', 'ls', 'cat'].includes(command)) {
-            const completed = autocompletePath(
-            cwd,
-            argument,
-            command === 'cd'
-            )
+      // Autocomplete filesystem paths
+      if (['cd', 'ls', 'cat'].includes(command)) {
+      const completed = autocompletePath(
+          cwd,
+          argument,
+          command === 'cd'
+        )
 
-            if (completed !== null) {
-            setInput(`${command} ${completed}`)
-            }
+        if (completed !== null) {
+          event.preventDefault()
+          setInput(`${command} ${completed}`)
         }
+      }
     }
 
   }
