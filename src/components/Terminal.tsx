@@ -139,6 +139,7 @@ const helpText = [
   '  whoami     Professional profile',
   '  skills     Technical competencies',
   '  projects   Engineering projects',
+  '  github     Open GitHub profile',
   '  certs      Certifications',
   '  ls         List directory contents',
   '  pwd        Print working directory',
@@ -156,7 +157,7 @@ const helpText = [
 
 const knownCommands = [
   'help', 'whoami', 'skills', 'projects',
-  'certs', 'ls', 'pwd', 'cd', 'cat', 'clear',
+  'certs', 'ls', 'pwd', 'cd', 'cat', 'clear', 'github',
 ]
 
 function normalizePath(cwd: string, target: string): string {
@@ -258,6 +259,7 @@ export default function Terminal() {
           'Explore with: cd projects',
         ]
         break
+
       case 'sudo': {
           if (args.join(' ').toLowerCase() === 'su') {
             output = [
@@ -276,7 +278,21 @@ export default function Terminal() {
         }
         break
         }
-        
+
+      case 'github': {
+         window.open(
+            'https://github.com/edilbertorodriguez',
+            '_blank',
+          'noopener,noreferrer'
+        )
+
+        output = [
+            'Opening GitHub profile...',
+            'github.com/edilbertorodriguez',
+        ]
+        break
+        }
+
       case 'pwd':
         output = ['/home/guest' + (cwd === '/' ? '' : cwd)]
         break
