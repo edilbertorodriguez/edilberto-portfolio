@@ -81,39 +81,78 @@ export const projects: Project[] = [
     ],
   },
   {
-  id: 'terraform',
-  number: '03',
-  title: 'Automated VM Provisioning',
-  category: 'INFRASTRUCTURE AS CODE',
-  status: 'Validated Laboratory Implementation',
-  summary:
-    'Repeatable provisioning of Ubuntu Server virtual machines on Proxmox VE using Terraform, cloud-init templates, and infrastructure configuration.',
-  challenge:
-    'Reduce manual virtual machine deployment and establish consistent, reproducible infrastructure configurations.',
-  solution:
-    'Developed reusable Terraform configurations for provisioning Ubuntu virtual machines from a cloud-init template on Proxmox VE, including CPU, memory, storage, networking, and guest initialization.',
-  technologies: [
-    'Terraform',
-    'Proxmox VE',
-    'Ubuntu Server 24.04',
-    'Cloud-init',
-    'QEMU Guest Agent',
-    'Linux',
-    'SSH',
-  ],
-  highlights: [
-    'Created an Ubuntu 24.04 cloud-init virtual machine template.',
-    'Implemented a reusable Terraform module for VM provisioning.',
-    'Configured virtual CPU, RAM, storage, networking, and guest initialization.',
-    'Provisioned multiple Ubuntu virtual machines with different resource specifications.',
-    'Validated VM networking, SSH connectivity, cloud-init, and QEMU guest agent operation.',
-  ],
-  results: [
-    'Successfully provisioned Ubuntu virtual machines through Terraform.',
-    'Verified network connectivity and SSH access.',
-    'Validated cloud-init configuration and QEMU guest agent functionality.',
-  ],
-},
+    id: 'terraform',
+    number: '03',
+    title: 'Automated VM Provisioning',
+    category: 'INFRASTRUCTURE AS CODE',
+    status: 'Validated Laboratory Implementation',
+    summary:
+      'Repeatable provisioning of Ubuntu Server virtual machines on Proxmox VE using Terraform, cloud-init templates, and infrastructure configuration.',
+    challenge:
+      'Reduce manual virtual machine deployment and establish consistent, reproducible infrastructure configurations.',
+    solution:
+      'Developed reusable Terraform configurations for provisioning Ubuntu virtual machines from a cloud-init template on Proxmox VE, including CPU, memory, storage, networking, and guest initialization.',
+    technologies: [
+      'Terraform',
+      'Proxmox VE',
+      'Ubuntu Server 24.04',
+      'Cloud-init',
+      'QEMU Guest Agent',
+      'Linux',
+      'SSH',
+    ],
+    highlights: [
+      'Created an Ubuntu 24.04 cloud-init virtual machine template.',
+      'Implemented a reusable Terraform module for VM provisioning.',
+      'Configured virtual CPU, RAM, storage, networking, and guest initialization.',
+      'Provisioned multiple Ubuntu virtual machines with different resource specifications.',
+      'Validated VM networking, SSH connectivity, cloud-init, and QEMU guest agent operation.',
+    ],
+    results: [
+      'Successfully provisioned Ubuntu virtual machines through Terraform.',
+      'Verified network connectivity and SSH access.',
+      'Validated cloud-init configuration and QEMU guest agent functionality.',
+    ],
+  },
+  
+  {
+    id: 'aegis-control',
+    number: '04',
+    title: 'Aegis Control — AI-Assisted Security Automation',
+    category: 'CYBERSECURITY / AI ORCHESTRATION',
+    status: 'Operational Prototype / Active Development',
+    summary:
+      'An early-stage security automation platform developed under Aegis Shield Blue Team Services, using a distributed controller/worker architecture to support modular defensive security workflows.',
+    challenge:
+      'Design a modular orchestration environment capable of coordinating security tools and automation workers while maintaining separation between orchestration, execution, and managed infrastructure.',
+    solution:
+      'Deployed dedicated Ubuntu Server virtual machines for a controller and worker, configured Docker-based services, established an OpenClaw gateway, paired Telegram connectivity, and validated the worker API health endpoint.',
+    technologies: [
+      'Ubuntu Server 24.04',
+      'Proxmox VE',
+      'Docker',
+      'Docker Compose',
+      'OpenClaw',
+      'REST API',
+      'Telegram',
+      'Linux',
+    ],
+    highlights: [
+      'Provisioned dedicated controller and worker virtual machines.',
+      'Configured Docker and container orchestration prerequisites.',
+      'Established the OpenClaw gateway on the controller.',
+      'Paired Telegram as an orchestration communication interface.',
+      'Validated the worker API health endpoint.',
+      'Designed a modular architecture for future authorized defensive automation.',
+    ],
+    results: [
+      'Controller environment deployed and gateway operational.',
+      'Telegram integration paired successfully.',
+      'Worker API health endpoint returned a successful status.',
+      'Initial worker plugin initialized.',
+    ],
+  },
+
   {
     id: 'terratech',
     number: '05',

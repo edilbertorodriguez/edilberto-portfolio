@@ -6,6 +6,7 @@ import SOCArchitecture from './SOCArchitecture'
 import InvestigationEvidence from './InvestigationEvidence'
 import TerraformArchitecture from './TerraformArchitecture'
 import TerraformCodeExample from './TerraformCodeExample'
+import AegisArchitecture from './AegisArchitecture'
 
 type ProjectDetailProps = {
   project: Project
@@ -67,6 +68,7 @@ export default function ProjectDetail({
       {project.id === 'security-lab' && <InvestigationEvidence />}
       {project.id === 'terraform' && <TerraformArchitecture />}
       {project.id === 'terraform' && <TerraformCodeExample />}
+      {project.id === 'aegis-control' && <AegisArchitecture />}
       <section className="mt-12">
         <h2 className="text-2xl font-bold">
           Technology Stack

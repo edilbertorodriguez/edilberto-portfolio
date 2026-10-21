@@ -54,9 +54,22 @@ const projects = [
   },
 
   {
+    id: 'aegis-control',
+    number: '04',
+
+    type: 'SECURITY AUTOMATION',
+
+    title: 'Aegis Control',
+
+    description: 'Early-stage controller/worker security orchestration platform developed under Aegis Shield.',
+    
+    stack: ['Ubuntu', 'Docker', 'OpenClaw', 'API'],
+  },
+  
+  {
 
   id: 'terratech',
-  number: '04',
+  number: '05',
 
   type: 'SATELLITE / IoT TELEMETRY',
 
