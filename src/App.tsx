@@ -304,6 +304,17 @@ function App() {
 
           </div>
 
+          <button
+            type="button"
+            onClick={() => {
+            setSelectedProject('aegis-control')
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+          className="mt-6 inline-flex items-center gap-2 rounded-md border border-cyan-500/50 px-5 py-3 text-sm font-medium text-cyan-200 transition hover:bg-cyan-500/10"
+        >
+          Explore Aegis Control Architecture ↗
+        </button>
+
         </section>
 
 
