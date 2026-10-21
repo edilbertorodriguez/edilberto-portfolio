@@ -520,7 +520,7 @@ export default function Terminal() {
       }
     }
 
-    if (event.key === 'Tab') {
+    if (event.key === 'Tab' && !event.shiftKey) {
          event.preventDefault()
 
         const trimmed = input.trim()
