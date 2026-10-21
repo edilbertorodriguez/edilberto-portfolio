@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Terminal from './components/Terminal'
 
 const projects = [
   {
@@ -22,6 +23,14 @@ const projects = [
     description: 'Repeatable Ubuntu VM deployments using infrastructure definitions, templates, and cloud-init configuration.',
     stack: ['Terraform', 'Ubuntu', 'Cloud-init', 'Proxmox'],
   },
+  {
+  number: '04',
+  type: 'SATELLITE / IoT TELEMETRY',
+  title: 'TerraTech — Satellite & IoT Telemetry',
+  description:
+    'Agricultural IoT platform architecture integrating ESP32-C6 sensor nodes, Raspberry Pi edge computing, Starlink satellite connectivity, and Grafana telemetry monitoring.',
+  stack: ['Starlink', 'ESP32-C6', 'Raspberry Pi', 'MQTT', 'IoT'],
+},
 ]
 
 const specialties = [
@@ -30,12 +39,6 @@ const specialties = [
   { icon: '◈', name: 'Cybersecurity', summary: 'Blue Team · Detection · Incident Response' },
   { icon: '⚙', name: 'Automation', summary: 'Terraform · Docker · Scripting' },
   { icon: '✧', name: 'Space Systems', summary: 'Satellite communications · Emerging systems' },
-]
-
-const terminalLines = [
-  { prompt: 'whoami', output: ['Edilberto Rodriguez', 'Infrastructure & Security Engineering'] },
-  { prompt: 'cat focus.txt', output: ['Cybersecurity | Networks | Virtualization', 'Automation | Space Systems'] },
-  { prompt: 'ls projects/', output: ['security-operations/  network-architecture/', 'infrastructure-as-code/  aegis-control/'] },
 ]
 
 function App() {
@@ -94,15 +97,7 @@ function App() {
             </div>
           </div>
 
-          <div className="terminal-frame" aria-label="Preview of terminal-style portfolio">
-            <div className="terminal-topbar"><div className="flex gap-2"><i className="traffic-light bg-rose-400" /><i className="traffic-light bg-amber-400" /><i className="traffic-light bg-emerald-400" /></div><span className="font-mono text-xs text-slate-400">guest@portfolio: ~</span><span className="text-slate-600">⌁</span></div>
-            <div className="space-y-5 px-5 py-6 font-mono text-[13px] leading-7 sm:px-7 sm:text-sm">
-              <div className="mb-6 text-xs text-cyan-300">EDILBERTO.OS <span className="text-slate-500">// PORTFOLIO TERMINAL</span><div className="mt-2 h-px bg-gradient-to-r from-cyan-500/40 to-transparent" /></div>
-              {terminalLines.map((entry) => <div key={entry.prompt}><div><span className="text-emerald-400">guest@portfolio</span><span className="text-slate-500">:~$</span> <span className="text-slate-100">{entry.prompt}</span></div>{entry.output.map((line) => <div key={line} className="text-slate-400">{line}</div>)}</div>)}
-              <div><span className="text-emerald-400">guest@portfolio</span><span className="text-slate-500">:~$</span> <span className="terminal-cursor" aria-hidden="true" /></div>
-              <p className="border-t border-white/10 pt-4 text-xs text-slate-500">Interactive commands arrive in Phase 2.</p>
-            </div>
-          </div>
+          <Terminal />
         </section>
 
         <section id="expertise" className="section-band border-y border-white/10">
