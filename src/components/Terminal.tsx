@@ -1,31 +1,47 @@
+
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
 
 type Entry = {
   command: string
+  prompt: string
   output: string[]
 }
 
-const commands: Record<string, string[]> = {
-  help: [
-    'Available commands:',
-    '  help       Show available commands',
-    '  whoami     Professional profile',
-    '  skills     Technical competencies',
-    '  projects   Engineering projects',
-    '  certs      Certifications',
-    '  clear      Clear terminal',
+const directories: Record<string, string[]> = {
+  '/': [
+    'about.txt',
+    'skills.txt',
+    'certs.txt',
+    'contact.txt',
+    'projects',
+    'experience',
   ],
+  '/projects': [
+    'security-lab',
+    'homelab',
+    'terraform',
+    'aegis-control',
+    'terratech',
+  ],
+  '/projects/security-lab': ['README.md'],
+  '/projects/homelab': ['README.md'],
+  '/projects/terraform': ['README.md'],
+  '/projects/aegis-control': ['README.md'],
+  '/projects/terratech': ['README.md'],
+  '/experience': ['README.md'],
+}
 
-  whoami: [
+const files: Record<string, string[]> = {
+  '/about.txt': [
     'Edilberto Rodriguez',
     'Infrastructure & Security Engineer',
     '',
-    'Focus: Cybersecurity, Networking,',
-    'Virtualization, Automation & Space Systems',
+    'Engineering professor and technical professional',
+    'focused on cybersecurity, networks, infrastructure,',
+    'automation, and satellite communications.',
   ],
-
-  skills: [
+  '/skills.txt': [
     '[INFRASTRUCTURE]',
     'Linux, Windows Server, Proxmox, Docker',
     '',
@@ -37,19 +53,11 @@ const commands: Record<string, string[]> = {
     '',
     '[AUTOMATION]',
     'Terraform, Cloud-init, Scripting',
-  ],
-
-  projects: [
-    '01  Security Operations Laboratory',
-    '02  Segmented Homelab Infrastructure',
-    '03  Automated VM Provisioning',
-    '04  Aegis Control - Security Automation',
-    '05  TerraTech - Satellite & IoT Telemetry',
     '',
-    'See the Projects section for details.',
+    '[SPACE / TELEMETRY]',
+    'Starlink, Raspberry Pi, ESP32-C6, IoT',
   ],
-
-  certs: [
+  '/certs.txt': [
     '[COMPLETED]',
     'Blue Team Level 1 (BTL1)',
     'Google Cybersecurity Certificate',
@@ -58,18 +66,135 @@ const commands: Record<string, string[]> = {
     'CompTIA Security+',
     'CompTIA CySA+',
   ],
+  '/contact.txt': [
+    'GitHub: github.com/edilbertorodriguez',
+    'Professional contact information: coming soon',
+  ],
+  '/projects/security-lab/README.md': [
+    'SECURITY OPERATIONS LABORATORY',
+    '',
+    'Tools: Wazuh, Security Onion, Velociraptor, MISP',
+    'Focus: Monitoring, threat detection, log analysis,',
+    'endpoint visibility, and incident response.',
+    '',
+    'Environment: Virtualized defensive security lab.',
+  ],
+  '/projects/homelab/README.md': [
+    'SEGMENTED HOMELAB INFRASTRUCTURE',
+    '',
+    'Technologies: Proxmox, VLANs, Cisco, Tailscale',
+    'Focus: Network segmentation, virtualization,',
+    'routing, administration, and secure remote access.',
+  ],
+  '/projects/terraform/README.md': [
+    'AUTOMATED VM PROVISIONING',
+    '',
+    'Technologies: Terraform, Ubuntu, Cloud-init',
+    'Platform: Proxmox VE',
+    '',
+    'Objective: Repeatable virtual machine deployment',
+    'and infrastructure automation.',
+  ],
+  '/projects/aegis-control/README.md': [
+    'AEGIS CONTROL',
+    'Aegis Shield Blue Team Services',
+    '',
+    'Status: Early-stage development',
+    '',
+    'Architecture: Ubuntu Server controller and worker',
+    'VMs, Docker, API services, and agent orchestration.',
+    '',
+    'Focus: Defensive security workflow automation.',
+  ],
+  '/projects/terratech/README.md': [
+    'TERRATECH — SATELLITE & IoT TELEMETRY',
+    '',
+    'Status: Architecture / Development',
+    '',
+    'Architecture:',
+    'ESP32-C6 wireless sensor nodes',
+    '  -> Raspberry Pi edge gateway',
+    '  -> Starlink internet connectivity',
+    '  -> Remote telemetry monitoring',
+    '',
+    'Technologies: ESP32-C6, Raspberry Pi, Starlink,',
+    'Grafana, IoT and wireless networking.',
+  ],
+  '/experience/README.md': [
+    'PROFESSIONAL EXPERIENCE',
+    '',
+    'Engineering Professor — Computer Systems',
+    'Academic Department Leadership',
+    'Cybersecurity training and technical workshops',
+    '',
+    'Founder / Technical Lead — Aegis Shield',
+    'Early-stage cybersecurity venture.',
+  ],
 }
 
-const availableCommands = Object.keys(commands)
+const helpText = [
+  'AVAILABLE COMMANDS',
+  '',
+  '  help       Show this help message',
+  '  whoami     Professional profile',
+  '  skills     Technical competencies',
+  '  projects   Engineering projects',
+  '  certs      Certifications',
+  '  ls         List directory contents',
+  '  pwd        Print working directory',
+  '  cd         Change directory',
+  '  cat        Read a text file',
+  '  clear      Clear the terminal',
+  '',
+  'EXAMPLES',
+  '  ls projects',
+  '  cd projects/terratech',
+  '  cat README.md',
+  '  cd ..',
+  '  cd ~',
+]
+
+const knownCommands = [
+  'help', 'whoami', 'skills', 'projects',
+  'certs', 'ls', 'pwd', 'cd', 'cat', 'clear',
+]
+
+function normalizePath(cwd: string, target: string): string {
+  if (!target || target === '~') return '/'
+
+  const input = target.startsWith('~/')
+    ? target.slice(1)
+    : target
+
+  const parts = input.startsWith('/')
+    ? []
+    : cwd.split('/').filter(Boolean)
+
+  for (const part of input.split('/')) {
+    if (!part || part === '.') continue
+    if (part === '..') {
+      parts.pop()
+    } else {
+      parts.push(part)
+    }
+  }
+
+  return '/' + parts.join('/')
+}
+
+function displayPath(path: string): string {
+  return path === '/' ? '~' : '~' + path
+}
 
 export default function Terminal() {
+  const [cwd, setCwd] = useState('/')
   const [history, setHistory] = useState<Entry[]>([
     {
       command: 'help',
-      output: commands.help,
+      prompt: '~',
+      output: helpText,
     },
   ])
-
   const [input, setInput] = useState('')
   const [previousCommands, setPreviousCommands] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
@@ -87,68 +212,184 @@ export default function Terminal() {
   function executeCommand(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const command = input.trim().toLowerCase()
-    if (!command) return
+    const raw = input.trim()
+    if (!raw) return
 
-    setPreviousCommands((previous) => [...previous, command])
+    const [command, ...args] = raw.split(/\s+/)
+    const cmd = command.toLowerCase()
+    const argument = args[0]
+
+    setPreviousCommands((prev) => [...prev, raw])
     setHistoryIndex(-1)
     setInput('')
 
-    if (command === 'clear') {
+    if (cmd === 'clear') {
       setHistory([])
       return
     }
 
-    const output = commands[command] ?? [
-      `Command not found: ${command}`,
-      "Type 'help' for available commands.",
-    ]
+    let output: string[] = []
 
-    setHistory((previous) => [
-      ...previous,
-      { command, output },
+    switch (cmd) {
+      case 'help':
+        output = helpText
+        break
+
+      case 'whoami':
+        output = files['/about.txt']
+        break
+
+      case 'skills':
+        output = files['/skills.txt']
+        break
+
+      case 'certs':
+        output = files['/certs.txt']
+        break
+
+      case 'projects':
+        output = [
+          '01  Security Operations Laboratory',
+          '02  Segmented Homelab Infrastructure',
+          '03  Automated VM Provisioning',
+          '04  Aegis Control - Security Automation',
+          '05  TerraTech - Satellite & IoT Telemetry',
+          '',
+          'Explore with: cd projects',
+        ]
+        break
+      case 'sudo': {
+          if (args.join(' ').toLowerCase() === 'su') {
+            output = [
+            '[sudo] password for guest:',
+            'guest is not in the sudoers file.',
+            'This incident will be reported.',
+            '',
+            '[SECURITY] Privilege escalation attempt denied.',
+            '[SECURITY] Access level: UNPRIVILEGED',
+            ]
+        } else {
+            output = [
+            'sudo: permission denied',
+            'This portfolio operates in unprivileged mode.',
+            ]
+        }
+        break
+        }
+        
+      case 'pwd':
+        output = ['/home/guest' + (cwd === '/' ? '' : cwd)]
+        break
+
+      case 'ls': {
+        const path = argument
+          ? normalizePath(cwd, argument)
+          : cwd
+
+        if (directories[path]) {
+          output = directories[path].map((name) =>
+            directories[path === '/' ? '/' + name : path + '/' + name]
+              ? name + '/'
+              : name
+          )
+        } else if (files[path]) {
+          output = [path.split('/').pop() || path]
+        } else {
+          output = [`ls: cannot access '${argument}': No such file or directory`]
+        }
+        break
+      }
+
+      case 'cd': {
+        const target = normalizePath(cwd, argument || '~')
+
+        if (directories[target]) {
+          setCwd(target)
+        } else {
+          output = [`cd: ${argument}: No such directory`]
+        }
+        break
+      }
+
+      case 'cat': {
+        if (!argument) {
+          output = ['cat: missing file operand']
+          break
+        }
+        if (normalizePath(cwd, argument) === '/etc/shadow') {
+          output = ['cat: /etc/shadow: Permission denied']
+          break
+        }
+        const path = normalizePath(cwd, argument)
+
+        if (files[path]) {
+          output = files[path]
+        } else if (directories[path]) {
+          output = [`cat: ${argument}: Is a directory`]
+        } else {
+          output = [`cat: ${argument}: No such file`]
+        }
+        break
+      }
+
+      default:
+        output = [
+          `Command not found: ${command}`,
+          "Type 'help' for available commands.",
+        ]
+    }
+
+    setHistory((prev) => [
+      ...prev,
+      {
+        command: raw,
+        prompt: displayPath(cwd),
+        output,
+      },
     ])
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'ArrowUp') {
       event.preventDefault()
+      if (!previousCommands.length) return
 
-      if (previousCommands.length === 0) return
-
-      const nextIndex =
+      const next =
         historyIndex === -1
           ? previousCommands.length - 1
           : Math.max(0, historyIndex - 1)
 
-      setHistoryIndex(nextIndex)
-      setInput(previousCommands[nextIndex])
+      setHistoryIndex(next)
+      setInput(previousCommands[next])
     }
 
     if (event.key === 'ArrowDown') {
       event.preventDefault()
-
       if (historyIndex === -1) return
 
-      const nextIndex = historyIndex + 1
+      const next = historyIndex + 1
 
-      if (nextIndex >= previousCommands.length) {
+      if (next >= previousCommands.length) {
         setHistoryIndex(-1)
         setInput('')
       } else {
-        setHistoryIndex(nextIndex)
-        setInput(previousCommands[nextIndex])
+        setHistoryIndex(next)
+        setInput(previousCommands[next])
       }
     }
 
     if (event.key === 'Tab') {
-      const matches = availableCommands.filter((command) =>
-        command.startsWith(input.trim().toLowerCase())
+      event.preventDefault()
+
+      const typed = input.trim().toLowerCase()
+      if (!typed || typed.includes(' ')) return
+
+      const matches = knownCommands.filter((cmd) =>
+        cmd.startsWith(typed)
       )
 
       if (matches.length === 1) {
-        event.preventDefault()
-        setInput(matches[0])
+        setInput(matches[0] + ' ')
       }
     }
   }
@@ -166,7 +407,7 @@ export default function Terminal() {
         </div>
 
         <span className="font-mono text-xs text-slate-400">
-          guest@portfolio: ~
+          guest@portfolio: {displayPath(cwd)}
         </span>
 
         <span className="text-emerald-400">● LIVE</span>
@@ -191,7 +432,9 @@ export default function Terminal() {
               <span className="text-emerald-400">
                 guest@portfolio
               </span>
-              <span className="text-slate-500">:~$ </span>
+              <span className="text-slate-500">
+                :{entry.prompt}$ 
+              </span>
               <span className="text-slate-100">
                 {entry.command}
               </span>
@@ -215,7 +458,7 @@ export default function Terminal() {
             htmlFor="terminal-input"
             className="shrink-0 text-emerald-400"
           >
-            guest@portfolio:~$
+            guest@portfolio:{displayPath(cwd)}$
           </label>
 
           <input
