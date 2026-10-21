@@ -139,6 +139,7 @@ const helpText = [
   '  whoami     Professional profile',
   '  skills     Technical competencies',
   '  projects   Engineering projects',
+  '  project    View an individual project',
   '  resume     View available resume versions',
   '  github     Open GitHub profile',
   '  certs      Certifications',
@@ -154,10 +155,12 @@ const helpText = [
   '  cat README.md',
   '  cd ..',
   '  cd ~',
+  '  project terratech',
+  '  project aegis-control',
 ]
 
 const knownCommands = [
-  'help', 'whoami', 'skills', 'projects',
+  'help', 'whoami', 'skills', 'projects', 'project',
   'certs', 'ls', 'pwd', 'cd', 'cat', 'clear', 'github', 'resume',
 ]
 
@@ -248,6 +251,36 @@ export default function Terminal() {
       case 'certs':
         output = files['/certs.txt']
         break
+
+        case 'project': {
+        if (!argument) {
+            output = [
+            'Usage: project <name>',
+            '',
+            'Available projects:',
+            '  security-lab',
+            '  homelab',
+            '  terraform',
+            '  aegis-control',
+            '  terratech',
+            '',
+            'Example: project terratech',
+            ]
+            break
+        }
+
+  const projectPath = `/projects/${argument}/README.md`
+
+  if (files[projectPath]) {
+    output = files[projectPath]
+  } else {
+    output = [
+      `Project not found: ${argument}`,
+      "Type 'project' to list available projects.",
+    ]
+  }
+  break
+}
 
       case 'projects':
         output = [
