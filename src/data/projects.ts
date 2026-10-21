@@ -41,6 +41,37 @@ export const projects: Project[] = [
       'Established a reusable environment for cybersecurity and infrastructure engineering exercises.',
     ],
   },
+  {
+    id: 'terratech',
+    number: '05',
+    title: 'TerraTech — Satellite & IoT Telemetry',
+    category: 'SATELLITE / IoT',
+    status: 'Architecture / Development',
+    summary:
+      'An agricultural telemetry platform architecture combining wireless sensor networks, edge computing, satellite connectivity, and remote monitoring.',
+    challenge:
+      'Collect environmental telemetry from geographically distributed agricultural sensors and make it accessible remotely, including in areas without conventional broadband connectivity.',
+    solution:
+      'Designed an architecture using ESP32-C6 wireless sensor nodes, Raspberry Pi edge processing, a local wireless network, Starlink satellite internet, and Grafana-based visualization.',
+    technologies: [
+      'ESP32-C6',
+      'Raspberry Pi',
+      'Starlink',
+      'Wi-Fi',
+      'MQTT',
+      'Grafana',
+      'IoT',
+    ],
+    highlights: [
+      'Designed distributed environmental telemetry acquisition using ESP32-C6 nodes.',
+      'Defined a Raspberry Pi gateway for local telemetry aggregation and processing.',
+      'Included satellite-backed connectivity for remotely deployed agricultural sites.',
+      'Planned Grafana visualization for sensor data and system monitoring.',
+    ],
+    results: [
+      'Documented the proposed sensor-to-dashboard system architecture.',
+    ],
+  },
 ]
 
 export function getProject(id: string): Project | undefined {
