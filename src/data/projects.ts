@@ -13,6 +13,45 @@ export type Project = {
 }
 
 export const projects: Project[] = [
+{
+  id: 'security-lab',
+  number: '01',
+  title: 'Security Operations Laboratory',
+  category: 'CYBERSECURITY / DETECTION ENGINEERING',
+  status: 'Operational Lab',
+  summary:
+    'A virtualized Blue Team laboratory for security monitoring, endpoint visibility, network traffic analysis, threat intelligence, and incident investigation.',
+  challenge:
+    'Design and operate a controlled environment for investigating suspicious activity across Linux hosts, Windows endpoints, and network traffic using multiple defensive security platforms.',
+  solution:
+    'Deployed specialized virtual machines for Wazuh, Security Onion, Velociraptor, and MISP. Used these platforms to explore host telemetry, network monitoring, file integrity monitoring, endpoint investigation, and threat intelligence management.',
+  technologies: [
+    'Wazuh',
+    'Security Onion',
+    'Velociraptor',
+    'MISP',
+    'Proxmox VE',
+    'Linux',
+    'Wireshark',
+    'Network Monitoring',
+  ],
+  highlights: [
+    'Deployed Wazuh for centralized security monitoring and endpoint visibility.',
+    'Configured and validated Wazuh agent communication with monitored Linux systems.',
+    'Used file integrity monitoring exercises to investigate monitored filesystem changes.',
+    'Deployed Security Onion as a standalone network security monitoring environment.',
+    'Established a Velociraptor environment for endpoint investigation and visibility.',
+    'Deployed MISP infrastructure for managing threat intelligence information.',
+    'Used network and host analysis exercises to develop practical Blue Team investigation skills.',
+  ],
+  results: [
+    'Verified active Wazuh agent enrollment and connectivity.',
+    'Performed host-based file integrity monitoring validation exercises.',
+    'Established operational laboratory installations of multiple defensive security platforms.',
+    'Created a reusable virtualized environment for defensive security investigation and experimentation.',
+  ],
+ },
+
   {
     id: 'homelab',
     number: '02',
