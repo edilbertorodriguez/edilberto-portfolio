@@ -1,75 +1,97 @@
-# React + TypeScript + Vite
+# Edilberto Rodriguez | Infrastructure & Security Engineering
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Portfolio](https://img.shields.io/badge/Live_Portfolio-Cloudflare_Pages-0ea5e9?style=flat-square)](https://edilberto-portfolio.pages.dev/)
+[![GitHub](https://img.shields.io/badge/GitHub-edilbertorodriguez-181717?style=flat-square&logo=github)](https://github.com/edilbertorodriguez)
 
-Currently, two official plugins are available:
+**Infrastructure · Cybersecurity · Networking · Automation · Satellite-connected systems**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This repository contains my personal engineering portfolio, built to present hands-on infrastructure and defensive security work through interactive case studies and a browser-based Linux-style terminal.
 
-## React Compiler
+**[Explore the live portfolio →](https://edilberto-portfolio.pages.dev/)**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Featured engineering projects
 
-## Expanding the ESLint configuration
+| Project | Engineering focus | Evidence in the portfolio |
+| --- | --- | --- |
+| **Security Operations Laboratory** | Wazuh, Security Onion, Velociraptor, MISP | Interactive SOC overview and a documented Wazuh real-time file integrity monitoring test with sanitized evidence |
+| **Segmented Homelab Infrastructure** | Proxmox VE, VLANs, routing, secure remote access | Interactive logical network architecture and implementation details |
+| **Automated VM Provisioning** | Terraform, Ubuntu cloud-init, Proxmox | Provisioning architecture, verified lab outcomes, and an illustrative sanitized configuration example |
+| **Aegis Control** | Ubuntu, Docker, OpenClaw, controller/worker APIs | Early-stage security automation architecture and lab implementation status |
+| **TerraTech** | ESP32-C6, Raspberry Pi, Starlink, IoT telemetry | Proposed sensor-to-dashboard architecture and component-level design |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Project status matters:** Some case studies document deployed laboratory systems; others describe prototypes or proposed architectures. The portfolio distinguishes demonstrated functionality from work in development.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Interactive terminal
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The portfolio includes a **simulated, client-side terminal** for exploring professional information and projects. Example commands:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+help
+whoami
+skills
+projects
+project terratech
+cd projects
+ls
+cat certs.txt
+github
+resume
+neofetch
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Command history and Tab completion are supported. The terminal **does not execute OS commands, provide SSH access, or connect to my private homelab**. The `resume` command currently presents a résumé center; downloadable PDFs are planned.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Technology stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **Build tooling:** Vite, npm, ESLint
+- **Hosting:** Cloudflare Pages with GitHub-connected deployments
+- **Design:** Responsive dark UI, interactive technical architecture components, accessible keyboard navigation
 
+## Run locally
+
+Prerequisites: Node.js and npm compatible with the version of Vite specified in `package.json`.
+
+```bash
+git clone https://github.com/edilbertorodriguez/edilberto-portfolio.git
+cd edilberto-portfolio
+npm ci
+npm run dev
 ```
+
+Open the local URL shown by Vite (typically `http://localhost:5173/`).
+
+To test the production build:
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+## Deployment
+
+The production branch is `main`. Cloudflare Pages builds the Vite application using:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Framework | React (Vite) |
+
+The public site is currently hosted at **https://edilberto-portfolio.pages.dev/**.
+
+## Security and disclosure
+
+This is a public, static portfolio. Network diagrams are simplified and do not include private administrative endpoints or credentials. Screenshots used as supporting evidence are intended to be sanitized before publication. Any security examples and investigation exercises are performed in controlled, authorized laboratory environments.
+
+## Professional profile
+
+I'm **Edilberto Rodriguez**, an infrastructure and cybersecurity engineering professional with experience in systems engineering education, networking, Linux, virtualization, Blue Team operations, and automation. I'm also developing **Aegis Shield**, an early-stage cybersecurity venture, and **Aegis Control**, its security orchestration prototype.
+
+- **Portfolio:** https://edilberto-portfolio.pages.dev/
+- **GitHub:** https://github.com/edilbertorodriguez
+
+---
+
+*Built to show how systems are designed, operated, investigated, and improved—not only to list technologies.*
