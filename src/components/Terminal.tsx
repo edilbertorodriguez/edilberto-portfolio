@@ -162,8 +162,10 @@ const helpText = [
 ]
 
 const knownCommands = [
-  'help', 'whoami', 'skills', 'projects', 'project',
-  'certs', 'ls', 'pwd', 'cd', 'cat', 'clear', 'github', 'resume',
+  'help', 'whoami', 'skills', 'projects',
+  'project', 'certs', 'ls', 'pwd', 'cd',
+  'cat', 'clear', 'github', 'resume',
+  'history', 'neofetch',
 ]
 
 function normalizePath(cwd: string, target: string): string {
@@ -191,6 +193,49 @@ function normalizePath(cwd: string, target: string): string {
 
 function displayPath(path: string): string {
   return path === '/' ? '~' : '~' + path
+}
+
+function autocompletePath(
+  cwd: string,
+  typed: string,
+  directoriesOnly = false
+): string | null {
+  const lastSlash = typed.lastIndexOf('/')
+
+  const parentInput =
+    lastSlash >= 0 ? typed.slice(0, lastSlash + 1) : ''
+
+  const prefix =
+    lastSlash >= 0 ? typed.slice(lastSlash + 1) : typed
+
+  const parentPath = parentInput
+    ? normalizePath(cwd, parentInput)
+    : cwd
+
+  const entries = directories[parentPath]
+
+  if (!entries) return null
+
+  const matches = entries.filter((name) => {
+    const fullPath =
+      parentPath === '/' ? `/${name}` : `${parentPath}/${name}`
+
+    return (
+      name.startsWith(prefix) &&
+      (!directoriesOnly || Boolean(directories[fullPath]))
+    )
+  })
+
+  if (matches.length !== 1) return null
+
+  const match = matches[0]
+
+  const fullPath =
+    parentPath === '/' ? `/${match}` : `${parentPath}/${match}`
+
+  const isDirectory = Boolean(directories[fullPath])
+
+  return parentInput + match + (isDirectory ? '/' : '')
 }
 
 export default function Terminal() {
@@ -476,19 +521,58 @@ export default function Terminal() {
     }
 
     if (event.key === 'Tab') {
-      event.preventDefault()
+         event.preventDefault()
 
-      const typed = input.trim().toLowerCase()
-      if (!typed || typed.includes(' ')) return
+        const trimmed = input.trim()
+        if (!trimmed) return
 
-      const matches = knownCommands.filter((cmd) =>
-        cmd.startsWith(typed)
-      )
+        const firstSpace = trimmed.indexOf(' ')
 
-      if (matches.length === 1) {
-        setInput(matches[0] + ' ')
-      }
+          // Complete command names.
+        if (firstSpace === -1) {
+            const matches = knownCommands.filter((cmd) =>
+            cmd.startsWith(trimmed.toLowerCase())
+            )
+
+            if (matches.length === 1) {
+            setInput(matches[0] + ' ')
+            }
+
+            return
+        }
+
+        const command = trimmed.slice(0, firstSpace).toLowerCase()
+        const argument = trimmed.slice(firstSpace + 1)
+
+        // Complete project shortcuts.
+        if (command === 'project') {
+            const projectNames = directories['/projects']
+
+            const matches = projectNames.filter((name) =>
+            name.startsWith(argument)
+            )
+
+            if (matches.length === 1) {
+            setInput(`project ${matches[0]} `)
+        }
+
+            return
+        }
+
+        // Complete simulated filesystem paths.
+        if (['cd', 'ls', 'cat'].includes(command)) {
+            const completed = autocompletePath(
+            cwd,
+            argument,
+            command === 'cd'
+            )
+
+            if (completed !== null) {
+            setInput(`${command} ${completed}`)
+            }
+        }
     }
+
   }
 
   return (
