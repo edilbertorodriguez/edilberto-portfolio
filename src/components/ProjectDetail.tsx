@@ -3,6 +3,7 @@ import type { Project } from '../data/projects'
 import NetworkArchitecture from './NetworkArchitecture'
 import TerraTechArchitecture from './TerraTechArchitecture'
 import SOCArchitecture from './SOCArchitecture'
+import InvestigationEvidence from './InvestigationEvidence'
 
 type ProjectDetailProps = {
   project: Project
@@ -61,6 +62,7 @@ export default function ProjectDetail({
       {project.id === 'homelab' && <NetworkArchitecture />}
       {project.id === 'terratech' && <TerraTechArchitecture />}
       {project.id === 'security-lab' && <SOCArchitecture />}
+      {project.id === 'security-lab' && <InvestigationEvidence />}
       <section className="mt-12">
         <h2 className="text-2xl font-bold">
           Technology Stack
