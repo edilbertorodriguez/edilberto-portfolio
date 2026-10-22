@@ -397,18 +397,26 @@ export default function Terminal() {
         }
       
       case 'resume': {
+          window.open(
+            '/resumes/Edilberto_Rodriguez_Engineering_Resume_2026.pdf',
+            '_blank',
+            'noopener,noreferrer'
+          )
+
           output = [
             'EDILBERTO RODRIGUEZ — RESUME CENTER',
             '',
-            'Available resume versions:',
-            '  Infrastructure & Systems Engineering',
+            '[AVAILABLE] Infrastructure & Security Engineering',
+            '',
+            'Opening engineering resume (PDF)...',
+            '',
+            'Additional specialized versions planned:',
             '  Cybersecurity / Blue Team',
             '  Satellite Communications & Space Systems',
             '',
-            '[STATUS] Resume downloads coming soon.',
-            'Use "github" to explore current technical projects.',
-        ]
-        break
+            'Portfolio: www.edilbertorodriguez.com',
+          ]
+          break
         }  
 
       case 'history': {

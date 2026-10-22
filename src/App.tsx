@@ -321,6 +321,15 @@ function App() {
 
         <section id="contact" className="mx-auto max-w-7xl px-5 py-24 text-center sm:px-8"><p className="section-kicker">// GET IN TOUCH</p><h2 className="mt-3 text-3xl font-bold sm:text-4xl">Let's build what comes next.</h2><p className="mx-auto mt-5 max-w-xl leading-8 text-slate-400">Interested in infrastructure, cybersecurity, networking, or emerging space technologies? Explore my engineering work and connect.</p><div className="mt-8 flex flex-wrap justify-center gap-3"><a href="https://github.com/edilbertorodriguez" className="primary-btn" target="_blank" rel="noreferrer">Explore GitHub ↗</a><a href="#home" className="secondary-btn">Back to top ↑</a></div></section>
 
+        <a
+          href="/resumes/Edilberto_Rodriguez_Engineering_Resume_2026.pdf"
+          download="Edilberto_Rodriguez_Resume.pdf"
+          className="secondary-btn"
+          aria-label="Download Edilberto Rodriguez engineering résumé as PDF"
+        >
+          Download Résumé ↓
+        </a>
+
       </main>
 
       <footer className="relative z-10 border-t border-white/10 px-5 py-7 text-center font-mono text-xs text-slate-500">© {new Date().getFullYear()} Edilberto Rodriguez · Infrastructure & Security Engineering</footer>
