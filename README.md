@@ -7,7 +7,7 @@
 
 This repository contains my personal engineering portfolio, built to present hands-on infrastructure and defensive security work through interactive case studies and a browser-based Linux-style terminal.
 
-**[Explore the live portfolio →](https://edilberto-portfolio.pages.dev/)**
+**[Explore the live portfolio →](https://www.edilbertorodriguez.com/)**
 
 ## Featured engineering projects
 
@@ -89,7 +89,7 @@ This is a public, static portfolio. Network diagrams are simplified and do not i
 
 I'm **Edilberto Rodriguez**, an infrastructure and cybersecurity engineering professional with experience in systems engineering education, networking, Linux, virtualization, Blue Team operations, and automation. I'm also developing **Aegis Shield**, an early-stage cybersecurity venture, and **Aegis Control**, its security orchestration prototype.
 
-- **Portfolio:** https://edilberto-portfolio.pages.dev/
+- **Portfolio:** https://www.edilbertorodriguez.com/
 - **GitHub:** https://github.com/edilbertorodriguez
 
 ---
